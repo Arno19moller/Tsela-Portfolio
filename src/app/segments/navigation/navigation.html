@@ -1,0 +1,47 @@
+<nav
+  class="fixed top-0 w-full z-50 transition-all duration-300"
+  [class.bg-[#0e0c09]]="isScrolled()"
+  [class.bg-opacity-80]="isScrolled()"
+  [class.backdrop-blur-md]="isScrolled()"
+>
+  <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+    <div class="text-3xl font-['Great_Vibes'] text-[#c9a84c] cursor-pointer">
+      <a href="/home#intro"> Portfolio </a>
+    </div>
+
+    <!-- Mobile Menu Button -->
+    <button (click)="toggleMenu()" class="md:hidden text-[#c9a84c] cursor-pointer">
+      <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M4 6h16M4 12h16m-7 6h7"
+        ></path>
+      </svg>
+    </button>
+
+    <!-- Desktop Nav -->
+    <div class="hidden md:flex space-x-8 font-medium">
+      @for (link of navLinks(); track link) {
+        <a
+          href="/home#{{ link.toLowerCase() }}"
+          class="hover:text-[#c9a84c] transition-colors"
+          [class.text-[#c9a84c]]="activeSection() === link.toLowerCase()"
+          >{{ link }}</a
+        >
+      }
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile Drawer -->
+@if (isMenuOpen()) {
+  <div class="fixed inset-0 z-40 bg-[#0e0c09] md:hidden pt-24 px-6 flex flex-col space-y-6">
+    @for (link of navLinks(); track link) {
+      <a href="/home#{{ link.toLowerCase() }}" (click)="toggleMenu()" class="text-2xl">
+        {{ link }}
+      </a>
+    }
+  </div>
+}
