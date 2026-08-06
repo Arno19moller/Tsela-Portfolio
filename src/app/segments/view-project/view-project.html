@@ -60,11 +60,7 @@
     <div class="w-full flex justify-center">
       <div
         class="w-full max-w-3xl mx-auto h-[300px] rounded-3xl"
-        style="
-          background-repeat: no-repeat;
-          background-size: cover;
-          background-position: center;
-        "
+        style="background-repeat: no-repeat; background-size: cover; background-position: center"
         [style.background-image]="'url(' + selectedProject()?.image + ')'"
       ></div>
     </div>
@@ -242,8 +238,14 @@
       <div class="p-6 overflow-y-auto flex-1">
         @if (activeFile.type === 'video' && activeFile.link) {
           <app-video-player [url]="activeFile.link"></app-video-player>
-        }
-        @if (activeFile.type === 'image' && activeFile.link) {
+        } @else if (activeFile.type === 'pdf' && activeFile.link) {
+          <!-- <ngx-extended-pdf-viewer
+            [src]="'data:application/pdf;base64,' + pdfLink()!"
+            [height]="'85vh'"
+            [showHandToolButton]="true"
+          >
+          </ngx-extended-pdf-viewer> -->
+        } @else if (activeFile.type === 'image' && activeFile.link) {
           <div
             class="rounded-xl overflow-hidden bg-slate-950 flex items-center justify-center max-h-80"
           >
@@ -253,18 +255,15 @@
               class="object-contain max-h-80 w-full"
             />
           </div>
-        } @else {
-          <div
-            class="p-6 bg-slate-50 dark:bg-slate-800/40 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 text-sm"
-          >
-            <p class="font-semibold text-slate-900 dark:text-white mb-2">
-              File Description:
-            </p>
-            <p class="text-xs leading-relaxed text-slate-600 dark:text-slate-300">
-              {{ activeFile.description }}
-            </p>
-          </div>
         }
+        <!-- <div
+          class="p-6 bg-slate-50 dark:bg-slate-800/40 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 text-sm"
+        >
+          <p class="font-semibold text-slate-900 dark:text-white mb-2">File Description:</p>
+          <p class="text-xs leading-relaxed text-slate-600 dark:text-slate-300">
+            {{ activeFile.description }}
+          </p>
+        </div> -->
       </div>
 
       <!-- Modal Footer -->
