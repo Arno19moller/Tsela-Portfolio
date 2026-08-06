@@ -235,25 +235,39 @@
       </div>
 
       <!-- Modal Content / Viewer -->
-      <div class="p-6 overflow-y-auto flex-1">
+      <div
+        class="p-6 overflow-y-auto flex-1"
+        [style.min-height]="activeFile.type === 'pdf' ? '600px' : 'unset'"
+      >
         @if (activeFile.type === 'video' && activeFile.link) {
           <app-video-player [url]="activeFile.link"></app-video-player>
         } @else if (activeFile.type === 'pdf' && activeFile.link) {
-          <!-- <ngx-extended-pdf-viewer
-            [src]="'data:application/pdf;base64,' + pdfLink()!"
-            [height]="'85vh'"
+          <ngx-extended-pdf-viewer
+            [src]="pdfLink()!"
             [showHandToolButton]="true"
+            [showPagingButtons]="true"
+            [showPresentationModeButton]="'always-visible'"
+            height="100%"
           >
-          </ngx-extended-pdf-viewer> -->
+          </ngx-extended-pdf-viewer>
         } @else if (activeFile.type === 'image' && activeFile.link) {
           <div
-            class="rounded-xl overflow-hidden bg-slate-950 flex items-center justify-center max-h-80"
+            class="rounded-xl overflow-hidden bg-slate-950 flex items-center justify-center max-h-80 relative"
           >
             <img
+              #fullScreenImg
               [src]="activeFile.link"
               [alt]="activeFile.name"
               class="object-contain max-h-80 w-full"
             />
+            <button
+              matMiniFab
+              class="cursor-pointer absolute top-5 right-5 file"
+              style="color: white"
+              (click)="openFullscreen(fullScreenImg)"
+            >
+              <mat-icon>crop_free</mat-icon>
+            </button>
           </div>
         }
         <!-- <div

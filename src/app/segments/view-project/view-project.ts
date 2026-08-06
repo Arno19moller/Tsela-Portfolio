@@ -55,8 +55,6 @@ export class ViewProjectComponent implements OnInit {
   openFile(file: FileItem) {
     this.selectedFile.set(file);
     if (file.type === 'pdf') {
-      console.log('asdasd');
-
       this.getPdfLink(file.link);
     }
   }
@@ -82,7 +80,7 @@ export class ViewProjectComponent implements OnInit {
     const blob = await response.blob();
 
     this.getBase64(blob).then((value) => {
-      console.log(value);
+      this.pdfLink.set(value);
     });
   }
 
@@ -101,5 +99,15 @@ export class ViewProjectComponent implements OnInit {
       // Read the blob as a Base64 Data URL
       reader.readAsDataURL(blob);
     });
+  }
+
+  openFullscreen(elem: any) {
+    if (elem.requestFullscreen) {
+      elem.requestFullscreen();
+    } else if (elem.webkitRequestFullscreen) {
+      elem.webkitRequestFullscreen();
+    } else if (elem.msRequestFullscreen) {
+      elem.msRequestFullscreen();
+    }
   }
 }
