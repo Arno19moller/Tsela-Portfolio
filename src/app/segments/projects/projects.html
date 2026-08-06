@@ -6,7 +6,7 @@
       A curated selection of design projects from 2024 - 2026.
     </p>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-2 rounded-3xl">
-      @for (project of projects; track project.id) {
+      @for (project of projects(); track project.id) {
         <div
           style="background-size: cover; background-position: center"
           class="group relative bg-[#0e0c09] aspect-square overflow-hidden cursor-pointer rounded-3xl"

@@ -1,5 +1,6 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { Component, input, OnInit, signal } from '@angular/core';
+import { getDownloadURL, ref } from 'firebase/storage';
+import { storage } from '../../firebase.config';
 
 @Component({
   selector: 'app-video-player',
@@ -8,16 +9,20 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
   styleUrl: './video-player.scss',
 })
 export class VideoPlayerComponent implements OnInit {
-  private sanitizer = inject(DomSanitizer);
-  safeVideoUrl!: SafeResourceUrl;
-
-  // Paste your copied OneDrive embed link here
-  private rawOneDriveUrl =
-    'https://1drv.ms/v/c/a1a83378f7e58b4b/IQRTxXqWeoCVTbIqKQO9ThT8AY0MEBQnCWsZQJpJSe5cSu8';
+  url = input.required<string>();
+  videoUrl = signal<string>('');
 
   constructor() {}
 
   ngOnInit(): void {
-    this.safeVideoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.rawOneDriveUrl);
+    const videoRef = ref(storage, this.url());
+
+    getDownloadURL(videoRef)
+      .then((url) => {
+        this.videoUrl.set(url);
+      })
+      .catch((error) => {
+        console.error('Error retrieving video URL:', error);
+      });
   }
 }

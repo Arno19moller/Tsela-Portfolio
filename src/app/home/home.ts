@@ -21,6 +21,7 @@ import { ProjectsComponent } from '../segments/projects/projects';
 })
 export class HomeComponent {
   activeSection = signal('hero');
-
   navLinks = ['INTRO', 'ABOUT', 'WORKS', 'CONTACT'];
+
+  constructor() {}
 }
