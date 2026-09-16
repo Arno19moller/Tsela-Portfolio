@@ -1,8 +1,10 @@
 <nav
-  class="fixed top-0 w-full z-50 transition-all duration-300"
+  id="navbar"
+  class="fixed top-0 w-full z-50 transition-all opacity-0 duration-300"
   [class.bg-[#0e0c09]]="isScrolled()"
   [class.bg-opacity-80]="isScrolled()"
   [class.backdrop-blur-md]="isScrolled()"
+  [class.opacity-100]="isScrolled()"
 >
   <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
     <div class="text-3xl font-['Great_Vibes'] text-[#c9a84c] cursor-pointer">

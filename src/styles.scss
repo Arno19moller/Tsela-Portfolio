@@ -33,4 +33,25 @@ body {
   margin: 0;
   height: 100%;
 }
+
 /* You can add global styles to this file, and also import other style files */
+$primary-font: 'Great Vibes';
+$secondary-font: Roboto;
+$color-white: white;
+$color-yellow: #c9a84c;
+$color-body: color-mix(in oklab, #e6dfd1 70%, transparent);
+
+.heading {
+  font-family: #{$primary-font};
+  color: $color-white;
+}
+
+.sub-heading {
+  font-family: #{$secondary-font};
+  color: $color-yellow;
+}
+
+.body {
+  color: $color-body;
+  // set default font in body {} above
+}

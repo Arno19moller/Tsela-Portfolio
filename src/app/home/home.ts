@@ -1,9 +1,9 @@
 import { Component, signal } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
+import { NavigationComponent } from '../components/navigation/navigation';
 import { AboutComponent } from '../segments/about/about';
 import { ContactComponent } from '../segments/contact/contact';
 import { HeroComponent } from '../segments/hero/hero';
-import { NavigationComponent } from '../segments/navigation/navigation';
 import { ProjectsComponent } from '../segments/projects/projects';
 
 @Component({

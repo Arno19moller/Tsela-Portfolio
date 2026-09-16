@@ -17,7 +17,7 @@ export class NavigationComponent {
 
   @HostListener('window:scroll', [])
   onWindowScroll() {
-    this.isScrolled.set(window.scrollY > 50);
+    this.isScrolled.set(window.scrollY > 150);
 
     // Simple scrollspy logic
     const sections = this.navLinks().map((link) => link.toLocaleLowerCase());
