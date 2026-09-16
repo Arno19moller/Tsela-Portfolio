@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
+import { NgxParticlesComponent } from '@omnedia/ngx-particles';
 
 @Component({
   selector: 'app-hero',
-  imports: [],
+  imports: [NgxParticlesComponent],
   templateUrl: './hero.html',
   styleUrl: './hero.scss',
 })
