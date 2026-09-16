@@ -34,6 +34,7 @@ body {
   height: 100%;
 }
 
+
 /* You can add global styles to this file, and also import other style files */
 $primary-font: 'Great Vibes';
 $secondary-font: Roboto;
@@ -41,6 +42,11 @@ $color-white: white;
 $color-yellow: #c9a84c;
 $color-body: color-mix(in oklab, #e6dfd1 70%, transparent);
 
+:root {
+  @include mat.dialog-overrides((container-color: rgb(20, 20, 18), subhead-color: $color-yellow, supporting-text-color: $color-body));
+  --mat-dialog-subhead-font: #{$primary-font},
+  sans-serif;
+}
 .heading {
   font-family: #{$primary-font};
   color: $color-white;
