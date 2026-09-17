@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject, resource, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import {
   MatDialogActions,
@@ -6,11 +6,37 @@ import {
   MatDialogContent,
   MatDialogTitle,
 } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { Gallery as GalleryComponent } from '../../../components/gallery/gallery';
+import { FileService } from '../../../services/file.service';
 
 @Component({
   selector: 'app-awards-dialog',
-  imports: [MatButtonModule, MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose],
+  imports: [
+    MatButtonModule,
+    MatIconModule,
+    MatDialogTitle,
+    MatDialogContent,
+    MatDialogActions,
+    MatDialogClose,
+    GalleryComponent,
+  ],
   templateUrl: './awards-dialog.html',
   styleUrl: './awards-dialog.scss',
 })
-export class AwardsDialog {}
+export class AwardsDialog {
+  readonly fileService = inject(FileService);
+
+  folderPath = signal<string>('Awards');
+  images = signal<string[]>([]);
+
+  galleryResource = resource({
+    params: () => ({ path: this.folderPath() }),
+    loader: async ({ params }) => {
+      if (!params.path) return [];
+      return this.fileService.getFileBlobsFromPath(params.path, 'Awards');
+    },
+  });
+
+  constructor() {}
+}

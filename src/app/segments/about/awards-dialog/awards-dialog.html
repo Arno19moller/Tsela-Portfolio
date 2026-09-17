@@ -1,7 +1,26 @@
-<h2 mat-dialog-title class="heading font-[Great_Vibes]">Industry Awards</h2>
+<div class="flex justify-between items-center" style="padding: 15px 24px 0 24px">
+  <h2 mat-dialog-title>Industry Awards</h2>
+  <button
+    matIconButton
+    [mat-dialog-close]
+    cdkFocusInitial
+    aria-label="Close popup"
+    style="padding-top: 6px"
+  >
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
 <mat-dialog-content>
-  <p>What's your favorite animal?</p>
+  <!-- folder-gallery.component.html -->
+  @if (galleryResource.isLoading()) {
+    <div class="loading-spinner">Loading folder contents...</div>
+  } @else if (galleryResource.error()) {
+    <div class="error-message">Unable to load images from folder.</div>
+  } @else if (galleryResource.value(); as images) {
+    <div class="image-grid">
+      <app-gallery [files]="images"></app-gallery>
+    </div>
+  }
 </mat-dialog-content>
-<mat-dialog-actions>
-  <button matButton [mat-dialog-close] cdkFocusInitial>Close</button>
-</mat-dialog-actions>
+<mat-dialog-actions></mat-dialog-actions>

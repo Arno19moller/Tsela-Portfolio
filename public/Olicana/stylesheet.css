@@ -1,0 +1,33 @@
+@font-face {
+    font-family: 'Olicana-Smooth';
+    src: url('Olicana-Smooth.eot');
+    src: local('Olicana-Smooth'),
+        url('Olicana-Smooth.eot?#iefix') format('embedded-opentype'),
+        url('Olicana-Smooth.woff') format('woff'),
+        url('Olicana-Smooth.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Olicana-Rough';
+    src: url('Olicana-Rough.eot');
+    src: local('Olicana-Rough'),
+        url('Olicana-Rough.eot?#iefix') format('embedded-opentype'),
+        url('Olicana-Rough.woff') format('woff'),
+        url('Olicana-Rough.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Olicana-Fine';
+    src: url('Olicana-Fine.eot');
+    src: local('Olicana-Fine'),
+        url('Olicana-Fine.eot?#iefix') format('embedded-opentype'),
+        url('Olicana-Fine.woff') format('woff'),
+        url('Olicana-Fine.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+

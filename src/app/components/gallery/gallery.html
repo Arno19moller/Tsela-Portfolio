@@ -1,0 +1,20 @@
+<swiper-container
+  #mainSwiper
+  class="mySwiper"
+  init="false"
+  style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff"
+>
+  @for (file of files(); track file) {
+    <swiper-slide lazy="true">
+      <img [src]="file.url" />
+    </swiper-slide>
+  }
+</swiper-container>
+
+<swiper-container #thumbsSwiper class="mySwiper2" init="false">
+  @for (file of files(); track file) {
+    <swiper-slide lazy="true">
+      <img [src]="file.url" class="thumbnails" />
+    </swiper-slide>
+  }
+</swiper-container>
