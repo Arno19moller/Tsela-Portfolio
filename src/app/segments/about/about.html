@@ -35,6 +35,7 @@
         target="_blank"
         href="https://tsela-photography.web.app/"
         rel="noopener noreferrer"
+        matTooltip="Open Tsela-Photography"
       >
         <div class="text-3xl font-bold text-[#c9a84c] me-2 w-fit">5</div>
         <div class="text-sm w-min">Shoots</div>
@@ -42,6 +43,7 @@
 
       <div
         class="flex justify-center items-center cursor-pointer rounded-lg transition-all duration-300 ease-in-out border-2 border-[#0e0c09] hover:border-[#c9a84c]"
+        matTooltip="View Award Docs"
         (click)="openAwards()"
       >
         <div class="text-3xl font-bold text-[#c9a84c] me-2 w-fit">2</div>
@@ -49,8 +51,27 @@
       </div>
     </div>
     <div class="flex flex-wrap gap-3">
-      @for (tag of skills; track tag) {
-        <span class="px-3 py-1 border border-[#c9a84c]/30 text-sm rounded-full">{{ tag }}</span>
+      @if (projectsResource.isLoading()) {
+        <div class="flex" style="width: 100%">
+          @for (item of [].constructor(5); track $index) {
+            <ngx-skeleton-loader
+              count="2"
+              appearance="line"
+              style="height: 20px; width: 19%; padding: 1%"
+              [theme]="{ height: '20px', background: '#0e0c09' }"
+            />
+          }
+        </div>
+      } @else if (projectsResource.error()) {
+        <div class="flex items-center justify-center">
+          <p>Unable to load files for awards, please close the popup and try again..</p>
+        </div>
+      } @else if (projectsResource.value(); as projects) {
+        @for (project of projects; track project.name) {
+          <span class="px-3 py-1 border border-[#c9a84c]/30 text-sm rounded-full">
+            {{ project.name }}
+          </span>
+        }
       }
     </div>
   </div>
