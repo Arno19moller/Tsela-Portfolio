@@ -68,7 +68,10 @@
         </div>
       } @else if (projectsResource.value(); as projects) {
         @for (project of projects; track project.name) {
-          <span class="px-3 py-1 border border-[#c9a84c]/30 text-sm rounded-full">
+          <span
+            class="px-3 py-1 border border-[#c9a84c]/30 text-sm rounded-full cursor-pointer"
+            [routerLink]="['/view-project', project.id]"
+          >
             {{ project.name }}
           </span>
         }

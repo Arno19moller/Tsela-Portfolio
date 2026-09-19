@@ -7,8 +7,8 @@ import { getDownloadURL, ref } from 'firebase/storage';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 import { VideoPlayerComponent } from '../../components/video-player/video-player';
 import { storage } from '../../firebase.config';
+import { Project } from '../../segments/projects/projects';
 import { FileItem, ProjectsStoreService } from '../../services/projects-store.service';
-import { Project } from '../projects/projects';
 
 @Component({
   selector: 'app-view-project',

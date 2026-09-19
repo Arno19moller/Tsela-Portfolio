@@ -1,10 +1,10 @@
 import { Component, signal } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
-import { NavigationComponent } from '../components/navigation/navigation';
-import { AboutComponent } from '../segments/about/about';
-import { ContactComponent } from '../segments/contact/contact';
-import { HeroComponent } from '../segments/hero/hero';
-import { ProjectsComponent } from '../segments/projects/projects';
+import { NavigationComponent } from '../../components/navigation/navigation';
+import { AboutComponent } from '../../segments/about/about';
+import { ContactComponent } from '../../segments/contact/contact';
+import { HeroComponent } from '../../segments/hero/hero';
+import { ProjectsComponent } from '../../segments/projects/projects';
 
 @Component({
   selector: 'app-home',
