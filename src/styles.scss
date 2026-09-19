@@ -5,7 +5,23 @@
 // custom components at https://material.angular.dev/guide/theming
 @use '@angular/material' as mat;
 
-$helvetica-font-stack: 'Helvetica', 'Helvetica Neue', Arial, sans-serif;
+@font-face {
+  font-family: 'Olicana';
+  src: url('/Olicana/Olicana-Smooth.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Houschka_Bold';
+  src: url('/Houschka/fonnts.com-Houschka_Rounded_Bold.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'Houschka_Light';
+  src: url('/Houschka/fonnts.com-Houschka_Rounded_Medium.otf') format('opentype');
+}
+
+
+$helvetica-font-stack: 'Houschka_Light';
 html {
   height: 100%;
 
@@ -19,35 +35,23 @@ html {
 
 body {
   height: 100%;
-    margin: 0;
+  margin: 0;
   color-scheme: light;
   background-color: var(--mat-sys-surface);
   color: var(--mat-sys-on-surface);
-  font-family: $helvetica-font-stack;
-  }
-
-@font-face {
-  font-family: 'Olicana';
-  src: url('/Olicana/Olicana-Smooth.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Houschka';
-  src: url('/Houschka/fonnts.com-Houschka_Pro_Medium.otf') format('otf');
-  font-weight: normal;
-  font-style: normal;
+  font-family: 'Houschka_Light';
 }
 
 $primary-font: 'Olicana';
-$secondary-font: 'Houschka', sans-serif;
+$secondary-font: 'Houschka_Bold';
+$tertiary-font: 'Houschka_Light';
 $color-white: white;
 $color-yellow: #c9a84c;
 $color-body: color-mix(in oklab, #e6dfd1 70%, transparent);
 
 :root {
-  @include mat.dialog-overrides((container-color: rgb(20, 20, 18), subhead-color: $color-yellow, supporting-text-color: $color-body, subhead-font: "#{$primary-font}, sans-serif", subhead-size: 3rem, subhead-line-height: 1));
+  @include mat.dialog-overrides((container-color: rgb(20, 20, 18), subhead-color: $color-yellow, supporting-text-color: $color-body, subhead-font: "#{$primary-font}", subhead-size: 3rem, subhead-line-height: 1));
+    --swiper-preloader-color: #e9b832;
 }
 
 .heading {
@@ -56,10 +60,12 @@ $color-body: color-mix(in oklab, #e6dfd1 70%, transparent);
 }
 
 .sub-heading {
-  font-family: #{$secondary-font};
+  font-family: 'Houschka_Bold';
   color: $color-yellow;
+    text-transform: uppercase;
 }
 
 .body {
+  font-family: 'Houschka_Light';
   color: $color-body;
 }

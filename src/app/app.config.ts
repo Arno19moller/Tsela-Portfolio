@@ -4,7 +4,7 @@ import {
   provideZonelessChangeDetection,
 } from '@angular/core';
 import { provideRouter, withComponentInputBinding, withInMemoryScrolling } from '@angular/router';
-
+import { provideNgxSkeletonLoader } from 'ngx-skeleton-loader';
 import { routes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
@@ -19,5 +19,11 @@ export const appConfig: ApplicationConfig = {
         anchorScrolling: 'enabled',
       }),
     ),
+    provideNgxSkeletonLoader({
+      theme: {
+        extendsFromRoot: true,
+        height: '30px',
+      },
+    }),
   ],
 };

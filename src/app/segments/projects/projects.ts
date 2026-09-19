@@ -1,6 +1,8 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, inject } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { ProjectsStoreService } from '../../services/projects-store.service';
 
 export interface Project {
@@ -12,19 +14,15 @@ export interface Project {
 
 @Component({
   selector: 'app-projects',
-  imports: [MatIconModule, RouterLink],
+  imports: [CommonModule, RouterLink, MatIconModule, NgxSkeletonLoaderModule],
   templateUrl: './projects.html',
   styleUrl: './projects.scss',
 })
-export class ProjectsComponent implements OnInit {
+export class ProjectsComponent {
   private projectsStore = inject(ProjectsStoreService);
 
   selectedProject: Project | undefined;
-  projects = signal<Project[]>([]);
+  projectsResource = this.projectsStore.projectsResource;
 
   constructor() {}
-
-  async ngOnInit(): Promise<void> {
-    this.projects.set(await this.projectsStore.getProjects());
-  }
 }

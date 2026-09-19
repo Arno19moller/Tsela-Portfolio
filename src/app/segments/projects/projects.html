@@ -5,39 +5,63 @@
     <p class="md:text-md text-[#666e63] lg:text-right mb-6">
       A curated selection of design projects from 2024 - 2026.
     </p>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-2 rounded-3xl">
-      @for (project of projects(); track project.id) {
-        <div
-          style="background-size: cover; background-position: center"
-          class="group relative bg-[#0e0c09] aspect-square overflow-hidden cursor-pointer rounded-3xl"
-          [style.background-image]="
-            (selectedProject?.id == project.id
-              ? 'linear-gradient(0deg,rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.5) 100%)'
-              : 'linear-gradient(0deg,rgba(14, 12, 9, 0.8) 10%, rgba(0, 0, 0, 0) 50%)') +
-            ', url(\'' +
-            project.image +
-            '\')'
-          "
-          [class.text-[1rem]]="selectedProject?.id == project.id"
-          (mouseenter)="selectedProject = project"
-          (mouseleave)="selectedProject = undefined"
-          [routerLink]="['/view-project', project.id]"
-        >
-          @if (selectedProject?.id == project.id) {
-            <span class="absolute top-5 right-5 text-[#e6bf56]">
-              <mat-icon> arrow_outward </mat-icon>
-            </span>
-          }
-          <span
-            style="top: 80%"
-            class="max-w-[85%] absolute right-left mx-6"
-            [class.text-[#e6dfd1]]="selectedProject?.id !== project.id"
-            [class.text-[#e6bf56]]="selectedProject?.id === project.id"
-          >
-            {{ project.name }}
-          </span>
-        </div>
-      }
-    </div>
+    @if (projectsResource.isLoading()) {
+      <div class="flex" style="width: 100%">
+        @for (item of [].constructor(4); track $index) {
+          <ngx-skeleton-loader
+            count="2"
+            appearance="line"
+            style="width: 25%; padding: 10px"
+            [theme]="{ height: '300px', background: '#0e0c09' }"
+          />
+        }
+      </div>
+    } @else if (projectsResource.error()) {
+      <div class="flex items-center justify-center">
+        <p>Unable to load files for awards, please close the popup and try again..</p>
+      </div>
+    } @else if (projectsResource.value(); as projects) {
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-2 rounded-3xl">
+        <ng-container
+          [ngTemplateOutlet]="projectTemplate"
+          [ngTemplateOutletContext]="{ projects: projects }"
+        ></ng-container>
+      </div>
+    }
   </div>
 </section>
+
+<ng-template #projectTemplate let-projects="projects">
+  @for (project of projects; track project.id) {
+    <div
+      style="background-size: cover; background-position: center"
+      class="group relative bg-[#0e0c09] aspect-square overflow-hidden cursor-pointer rounded-3xl"
+      [style.background-image]="
+        (selectedProject?.id == project.id
+          ? 'linear-gradient(0deg,rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.5) 100%)'
+          : 'linear-gradient(0deg,rgba(14, 12, 9, 0.8) 10%, rgba(0, 0, 0, 0) 50%)') +
+        ', url(\'' +
+        project.image +
+        '\')'
+      "
+      [class.text-[1rem]]="selectedProject?.id == project.id"
+      (mouseenter)="selectedProject = project"
+      (mouseleave)="selectedProject = undefined"
+      [routerLink]="['/view-project', project.id]"
+    >
+      @if (selectedProject?.id == project.id) {
+        <span class="absolute top-5 right-5 text-[#e6bf56]">
+          <mat-icon> arrow_outward </mat-icon>
+        </span>
+      }
+      <span
+        style="top: 80%"
+        class="max-w-[85%] absolute right-left mx-6"
+        [class.text-[#e6dfd1]]="selectedProject?.id !== project.id"
+        [class.text-[#e6bf56]]="selectedProject?.id === project.id"
+      >
+        {{ project.name }}
+      </span>
+    </div>
+  }
+</ng-template>

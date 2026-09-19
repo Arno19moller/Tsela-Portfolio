@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, resource, signal } from '@angular/core';
 import { collection, doc, getDoc, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../firebase.config';
 import { Project } from '../segments/projects/projects';
@@ -15,24 +15,38 @@ export interface FileItem {
   providedIn: 'root',
 })
 export class ProjectsStoreService {
-  public projects: Project[] = [];
+  public projects = signal<Project[]>([]);
+
+  projectsResource = resource({
+    params: () => ({}),
+    loader: async ({ params }) => {
+      return this.getProjects();
+    },
+  });
 
   constructor() {}
 
   async getProjects(): Promise<Project[]> {
-    this.projects = [];
+    if (this.projects().length > 0) {
+      return this.projects();
+    }
+
     const docRef = collection(db, 'projects');
     const querySnapshot = await getDocs(docRef);
 
+    const projects = this.projects();
     querySnapshot.forEach((doc) => {
-      this.projects.push({
+      projects.push({
         id: doc.id,
         projectId: doc.data()['id'],
         name: doc.data()['name'],
         image: doc.data()['image'],
       });
     });
-    return this.projects;
+    projects.sort((a, b) => a.name.localeCompare(b.name));
+    this.projects.set(projects);
+
+    return this.projects();
   }
 
   async getProject(id: string): Promise<Project> {
