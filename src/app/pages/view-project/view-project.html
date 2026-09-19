@@ -58,11 +58,30 @@
       {{ selectedProject()?.name }}
     </h2>
     <div class="w-full flex justify-center">
-      <div
+      @if (galleryResource.isLoading()) {
+        <div class="loading-spinner flex flex-col items-center justify-center">
+          <p>Loading award files...</p>
+        </div>
+      } @else if (galleryResource.error()) {
+        <div class="error-message flex items-center justify-center">
+          <p>Unable to load files for awards, please close the popup and try again..</p>
+        </div>
+      } @else if (galleryResource.value(); as files) {
+        <div
+          class="image-grid"
+          style="height: 500px; width: 100%; overflow: hidden; position: relative"
+        >
+          <app-coverflow-gallery [files]="selectedProjectFiles()"></app-coverflow-gallery>
+          <!-- <app-gallery [files]="files"></app-gallery> -->
+        </div>
+      }
+
+      <!-- Section Image -->
+      <!-- <div
         class="w-full max-w-3xl mx-auto h-[300px] rounded-3xl"
         style="background-repeat: no-repeat; background-size: cover; background-position: center"
         [style.background-image]="'url(' + selectedProject()?.image + ')'"
-      ></div>
+      ></div> -->
     </div>
 
     <main class="w-full max-w-3xl mx-auto mt-5 pb-5 overflow-auto">
@@ -242,14 +261,7 @@
         @if (activeFile.type === 'video' && activeFile.link) {
           <app-video-player [url]="activeFile.link"></app-video-player>
         } @else if (activeFile.type === 'pdf' && activeFile.link) {
-          <ngx-extended-pdf-viewer
-            [src]="pdfLink()!"
-            [showHandToolButton]="true"
-            [showPagingButtons]="true"
-            [showPresentationModeButton]="'always-visible'"
-            height="100%"
-          >
-          </ngx-extended-pdf-viewer>
+          <app-pdf [link]="activeFile.link"></app-pdf>
         } @else if (activeFile.type === 'image' && activeFile.link) {
           <div
             class="rounded-xl overflow-hidden bg-slate-950 flex items-center justify-center max-h-80 relative"

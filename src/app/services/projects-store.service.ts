@@ -1,6 +1,7 @@
 import { Injectable, resource, signal } from '@angular/core';
 import { collection, doc, getDoc, getDocs, query, where } from 'firebase/firestore';
-import { db } from '../firebase.config';
+import { getDownloadURL, ref } from 'firebase/storage';
+import { db, storage } from '../firebase.config';
 import { Project } from '../segments/projects/projects';
 
 export interface FileItem {
@@ -66,17 +67,51 @@ export class ProjectsStoreService {
   }
 
   async getProjectFiles(projectId: string): Promise<FileItem[]> {
-    const files: FileItem[] = [];
     const docRef = collection(db, 'files');
     const q = query(docRef, where('projectId', '==', projectId));
     const querySnapshot = await getDocs(q);
 
+    const rawFiles: FileItem[] = [];
     querySnapshot.forEach((doc) => {
-      doc.data()['files'].forEach((file: FileItem) => {
-        files.push(file);
-      });
+      doc.data()['files'].forEach((file: FileItem) => rawFiles.push(file));
     });
-    return files;
+
+    // Resolve all PDF URLs in parallel — forEach can't await, so we use Promise.all
+    return Promise.all(
+      rawFiles.map((file) =>
+        file.type === 'pdf'
+          ? this.getPDFUrl(file.link).then((url) => ({ ...file, link: url }))
+          : Promise.resolve(file)
+      )
+    );
+  }
+
+  async getPDFUrl(link: string): Promise<string> {
+    const pdfRef = ref(storage, link);
+    const downloadUrl = await getDownloadURL(pdfRef);
+
+    const response = await fetch(downloadUrl);
+    const blob = await response.blob();
+
+    return await this.getBase64(blob);
+  }
+
+  getBase64(blob: Blob) {
+    return new Promise<string>((resolve, reject) => {
+      const reader = new FileReader();
+
+      reader.onloadend = () => {
+        // Returns format: "data:application/pdf;base64,JVBERi0xLj..."
+        const base64Data = reader.result as string;
+        resolve(base64Data);
+      };
+
+      reader.onerror = (error) => reject(error);
+
+      // Read the blob as a Base64 Data URL
+      reader.readAsDataURL(blob);
+    });
   }
 }
+
 ////     projectId: 'hSlkQIP2FU45yG2DKft0'

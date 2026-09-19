@@ -4,7 +4,6 @@ import { storage } from '../firebase.config';
 
 export interface StorageFileItem {
   name: string;
-  path: string;
   url: string;
 }
 
@@ -29,7 +28,6 @@ export class FileService {
         const url = await getDownloadURL(itemRef);
         return {
           name: itemRef.name,
-          path: itemRef.fullPath,
           url,
         };
       }),

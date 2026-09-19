@@ -1,0 +1,29 @@
+<swiper-container
+  #mainSwiper
+  style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff"
+  pagination="true"
+  effect="coverflow"
+  grab-cursor="true"
+  centered-slides="true"
+  slides-per-view="auto"
+  coverflow-effect-rotate="50"
+  coverflow-effect-stretch="0"
+  coverflow-effect-depth="100"
+  coverflow-effect-modifier="1"
+  coverflow-effect-slide-shadows="true"
+  navigation="true"
+>
+  @for (file of galleryFiles(); track file.name) {
+    <swiper-slide style="position: relative">
+      @if (file.type === 'video' && file.link) {
+        <app-video-player [url]="file.link" style="width: 100%; height: 100%"></app-video-player>
+      }
+      <!--  @else if (file.type === 'pdf' && file.link) {
+        <app-pdf [link]="file.link" style="width: 100%; height: 100%"></app-pdf>
+      }  -->
+      @else if (file.type === 'image' && file.link) {
+        <img #fullScreenImg [src]="file.link" [alt]="file.name" style="width: 100%; height: 100%" />
+      }
+    </swiper-slide>
+  }
+</swiper-container>

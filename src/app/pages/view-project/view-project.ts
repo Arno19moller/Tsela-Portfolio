@@ -1,13 +1,16 @@
 import { CommonModule, Location } from '@angular/common';
-import { Component, inject, input, OnInit, signal } from '@angular/core';
+import { Component, inject, input, OnInit, resource, signal } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
 import { getDownloadURL, ref } from 'firebase/storage';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
+import { CoverflowGallery } from '../../components/coverflow-gallery/coverflow-gallery';
+import { Pdf } from '../../components/pdf/pdf';
 import { VideoPlayerComponent } from '../../components/video-player/video-player';
 import { storage } from '../../firebase.config';
 import { Project } from '../../segments/projects/projects';
+import { FileService } from '../../services/file.service';
 import { FileItem, ProjectsStoreService } from '../../services/projects-store.service';
 
 @Component({
@@ -18,6 +21,8 @@ import { FileItem, ProjectsStoreService } from '../../services/projects-store.se
     MatIconModule,
     VideoPlayerComponent,
     NgxExtendedPdfViewerModule,
+    CoverflowGallery,
+    Pdf,
   ],
   templateUrl: './view-project.html',
   styleUrl: './view-project.scss',
@@ -26,6 +31,7 @@ export class ViewProjectComponent implements OnInit {
   private projectsStore = inject(ProjectsStoreService);
   public location = inject(Location);
   public sanitizer = inject(DomSanitizer);
+  readonly fileService = inject(FileService);
 
   id = input.required<string>();
   isMenuOpen = signal(false);
@@ -34,6 +40,15 @@ export class ViewProjectComponent implements OnInit {
   selectedProjectFiles = signal<FileItem[]>([]);
   selectedFile = signal<FileItem | undefined>(undefined);
   pdfLink = signal<string>(');');
+
+  folderPath = signal<string>('Awards');
+  galleryResource = resource({
+    params: () => ({ path: this.folderPath() }),
+    loader: async ({ params }) => {
+      if (!params.path) return [];
+      return this.fileService.getFileBlobsFromPath(params.path, 'Awards');
+    },
+  });
 
   constructor() {}
 
@@ -54,9 +69,9 @@ export class ViewProjectComponent implements OnInit {
 
   openFile(file: FileItem) {
     this.selectedFile.set(file);
-    if (file.type === 'pdf') {
-      this.getPdfLink(file.link);
-    }
+    // if (file.type === 'pdf') {
+    //   this.getPdfLink(file.link);
+    // }
   }
 
   getIconBg(type: FileItem['type']): string {
