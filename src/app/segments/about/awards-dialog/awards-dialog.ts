@@ -7,6 +7,7 @@ import {
   MatDialogTitle,
 } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Gallery as GalleryComponent } from '../../../components/gallery/gallery';
 import { FileService } from '../../../services/file.service';
 
@@ -19,6 +20,7 @@ import { FileService } from '../../../services/file.service';
     MatDialogContent,
     MatDialogActions,
     MatDialogClose,
+    MatProgressSpinnerModule,
     GalleryComponent,
   ],
   templateUrl: './awards-dialog.html',

@@ -14,9 +14,14 @@
 <mat-dialog-content>
   <!-- folder-gallery.component.html -->
   @if (galleryResource.isLoading()) {
-    <div class="loading-spinner">Loading folder contents...</div>
+    <div class="loading-spinner flex flex-col items-center justify-center">
+      <mat-spinner class="mb-8"></mat-spinner>
+      <p>Loading award files...</p>
+    </div>
   } @else if (galleryResource.error()) {
-    <div class="error-message">Unable to load images from folder.</div>
+    <div class="error-message flex items-center justify-center">
+      <p>Unable to load files for awards, please close the popup and try again..</p>
+    </div>
   } @else if (galleryResource.value(); as images) {
     <div class="image-grid">
       <app-gallery [files]="images"></app-gallery>
