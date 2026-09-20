@@ -14,6 +14,8 @@ swiper-slide {
     width: min(80vw, 960px);
     height: 100%;
     background-color: #0e0c09;
+    position: relative;
+        overflow: hidden;
 }
 
 swiper-slide img {

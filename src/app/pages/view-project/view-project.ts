@@ -1,13 +1,12 @@
 import { CommonModule, Location } from '@angular/common';
-import { Component, inject, input, OnInit, resource, signal } from '@angular/core';
+import { Component, inject, model, OnInit, resource, signal } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { DomSanitizer } from '@angular/platform-browser';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { getDownloadURL, ref } from 'firebase/storage';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 import { CoverflowGallery } from '../../components/coverflow-gallery/coverflow-gallery';
-import { Pdf } from '../../components/pdf/pdf';
-import { VideoPlayerComponent } from '../../components/video-player/video-player';
 import { storage } from '../../firebase.config';
 import { Project } from '../../segments/projects/projects';
 import { FileService } from '../../services/file.service';
@@ -19,10 +18,11 @@ import { FileItem, ProjectsStoreService } from '../../services/projects-store.se
     CommonModule,
     RouterLink,
     MatIconModule,
-    VideoPlayerComponent,
     NgxExtendedPdfViewerModule,
     CoverflowGallery,
-    Pdf,
+    MatProgressSpinnerModule,
+    MatIconModule,
+    RouterLink,
   ],
   templateUrl: './view-project.html',
   styleUrl: './view-project.scss',
@@ -31,15 +31,18 @@ export class ViewProjectComponent implements OnInit {
   private projectsStore = inject(ProjectsStoreService);
   public location = inject(Location);
   public sanitizer = inject(DomSanitizer);
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
   readonly fileService = inject(FileService);
 
-  id = input.required<string>();
+  id = model.required<string>();
   isMenuOpen = signal(false);
-  navLinks = signal<string[]>(['Portfolio']);
+  navLinks = signal<string[]>(['Back to Portfolio']);
   selectedProject = signal<Project | undefined>(undefined);
   selectedProjectFiles = signal<FileItem[]>([]);
   selectedFile = signal<FileItem | undefined>(undefined);
   pdfLink = signal<string>(');');
+  showLoader = signal<boolean>(false);
 
   folderPath = signal<string>('Awards');
   galleryResource = resource({
@@ -53,10 +56,21 @@ export class ViewProjectComponent implements OnInit {
   constructor() {}
 
   async ngOnInit(): Promise<void> {
+    this.route.paramMap.subscribe(async (params) => {
+      this.id.set(params.get('id') ?? '');
+      await this.initializeApp();
+    });
+  }
+
+  async initializeApp(): Promise<void> {
+    this.showLoader.set(true);
     this.selectedProject.set(await this.projectsStore.getProject(this.id()));
     this.selectedProjectFiles.set(
       await this.projectsStore.getProjectFiles(this.selectedProject()!.id),
     );
+    setTimeout(() => {
+      this.showLoader.set(false);
+    }, 1000);
   }
 
   toggleMenu() {
@@ -124,5 +138,25 @@ export class ViewProjectComponent implements OnInit {
     } else if (elem.msRequestFullscreen) {
       elem.msRequestFullscreen();
     }
+  }
+
+  navigateTo(type: 'next' | 'prev'): void {
+    const projects = this.projectsStore.projects();
+    let id = '';
+
+    const currIndex = projects.findIndex((p) => p.id === this.id());
+    if (currIndex >= 0) {
+      if (type === 'prev') {
+        let index = currIndex - 1;
+        if (currIndex === 0) index = projects.length - 1;
+        id = projects[index].id;
+      } else {
+        let index = currIndex + 1;
+        if (currIndex === projects.length - 1) index = 0;
+        id = projects[index].id;
+      }
+    }
+
+    this.router.navigate(['/view-project', id]);
   }
 }

@@ -76,3 +76,8 @@ $color-body: color-mix(in oklab, #e6dfd1 70%, transparent);
   -webkit-text-fill-color: transparent;
   -webkit-text-stroke: 0.5px #c9a84c;
 }
+.hollow-text-white {
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 0.5px #fff;
+}

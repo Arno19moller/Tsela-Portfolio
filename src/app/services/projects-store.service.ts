@@ -81,8 +81,8 @@ export class ProjectsStoreService {
       rawFiles.map((file) =>
         file.type === 'pdf'
           ? this.getPDFUrl(file.link).then((url) => ({ ...file, link: url }))
-          : Promise.resolve(file)
-      )
+          : Promise.resolve(file),
+      ),
     );
   }
 
