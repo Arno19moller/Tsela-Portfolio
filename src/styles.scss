@@ -12,16 +12,17 @@
 
 @font-face {
   font-family: 'Houschka_Bold';
-  src: url('/Houschka/fonnts.com-Houschka_Rounded_Bold.otf') format('opentype');
+  src: url('/Houschka/fonnts.com-Houschka_Pro_Bold.otf') format('opentype');
 }
 
 @font-face {
   font-family: 'Houschka_Light';
-  src: url('/Houschka/fonnts.com-Houschka_Rounded_Medium.otf') format('opentype');
+  src: url('/Houschka/fonnts.com-Houschka_Pro_Medium.otf') format('opentype');
 }
 
 
 $helvetica-font-stack: 'Houschka_Light';
+
 html {
   height: 100%;
 
@@ -51,21 +52,27 @@ $color-body: color-mix(in oklab, #e6dfd1 70%, transparent);
 
 :root {
   @include mat.dialog-overrides((container-color: rgb(20, 20, 18), subhead-color: $color-yellow, supporting-text-color: $color-body, subhead-font: "#{$primary-font}", subhead-size: 3rem, subhead-line-height: 1));
-    --swiper-preloader-color: #e9b832;
+  --swiper-preloader-color: #e9b832;
 }
 
 .heading {
   font-family: #{$primary-font};
-  color: $color-white;
+  // color: $color-white;
 }
 
 .sub-heading {
   font-family: 'Houschka_Bold';
   color: $color-yellow;
-    text-transform: uppercase;
+  text-transform: uppercase;
 }
 
 .body {
   font-family: 'Houschka_Light';
   color: $color-body;
+}
+
+.hollow-text {
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 0.5px #c9a84c;
 }

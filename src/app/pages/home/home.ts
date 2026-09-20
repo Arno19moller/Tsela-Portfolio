@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { NavigationComponent } from '../../components/navigation/navigation';
 import { AboutComponent } from '../../segments/about/about';
@@ -20,8 +20,5 @@ import { ProjectsComponent } from '../../segments/projects/projects';
   styleUrl: './home.scss',
 })
 export class HomeComponent {
-  activeSection = signal('hero');
-  navLinks = ['INTRO', 'ABOUT', 'WORKS', 'CONTACT'];
-
   constructor() {}
 }
