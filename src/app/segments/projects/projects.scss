@@ -1,3 +1,13 @@
-.asd {
-    color: #e6bf56
+.recent-projects {
+    font-size: 4.5rem;
+}
+
+@media screen and (min-width: 768px) {
+    .recent-projects {
+        font-size: 5rem;
+    }
+}
+
+.brag-line {
+    line-height: 15px;
 }

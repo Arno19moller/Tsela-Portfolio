@@ -10,7 +10,7 @@ export class NavigationComponent {
   isScrolled = signal(false);
   isMenuOpen = signal(false);
 
-  navLinks = signal<string[]>(['INTRO', 'ABOUT ME', 'WORKS', 'CONTACT']);
+  navLinks = signal<string[]>(['INTRO', 'ABOUT ME', 'PROJECTS', 'CONTACT']);
   activeSection = signal<string>('hero');
 
   constructor() {}
