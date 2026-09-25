@@ -1,10 +1,17 @@
 @if (link()) {
   <ngx-extended-pdf-viewer
-    [src]="link()"
-    [showHandToolButton]="true"
-    [showPagingButtons]="true"
-    [showPresentationModeButton]="'always-visible'"
     height="100%"
+    backgroundColor="#1f1a14"
+    theme="dark"
+    [src]="link()"
+    [showPagingButtons]="true"
+    [disableEditorButtons]="true"
+    [disableTextEditor]="true"
+    [disableDrawEditor]="true"
+    [disableStampEditor]="true"
+    [disableHighlightEditor]="true"
+    [disableCommentEditor]="true"
+    [disableSignatureEditor]="true"
   >
   </ngx-extended-pdf-viewer>
 }

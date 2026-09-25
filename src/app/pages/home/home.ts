@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
+import { Footer } from '../../components/footer/footer';
 import { NavigationComponent } from '../../components/navigation/navigation';
 import { AboutComponent } from '../../segments/about/about';
 import { ContactComponent } from '../../segments/contact/contact';
@@ -15,6 +16,7 @@ import { ProjectsComponent } from '../../segments/projects/projects';
     AboutComponent,
     ProjectsComponent,
     ContactComponent,
+    Footer,
   ],
   templateUrl: './home.html',
   styleUrl: './home.scss',

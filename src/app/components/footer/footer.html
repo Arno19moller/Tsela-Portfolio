@@ -1,0 +1,30 @@
+<footer
+  class="flex w-full flex-row flex-wrap items-center justify-center gap-x-12 gap-y-3 border-t border-slate-200 py-4 text-center md:justify-between"
+>
+  <div class="text-4xl text-[#fff] cursor-pointer heading" style="line-height: 50px">
+    <a href="/home#intro"> Karla Strydom </a>
+  </div>
+
+  <ul class="flex flex-wrap items-center gap-x-6 gap-y-2">
+    <div class="hidden md:flex space-x-8 font-medium">
+      @for (link of navLinks(); track link) {
+        <li>
+          <a href="/home#{{ link.toLowerCase() }}" class="hover:text-[#c9a84c] transition-colors">
+            {{ link }}
+          </a>
+        </li>
+      }
+    </div>
+  </ul>
+
+  <p class="w-full text-right">
+    Website by
+    <a
+      href="https://github.com/Arno19moller"
+      target="_blank"
+      class="hover:text-[#c9a84c] transition-colors"
+    >
+      Arno Möller
+    </a>
+  </p>
+</footer>

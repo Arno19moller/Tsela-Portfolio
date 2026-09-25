@@ -6,7 +6,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { getDownloadURL, ref } from 'firebase/storage';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
-import { CoverflowGallery } from '../../components/coverflow-gallery/coverflow-gallery';
+import { Pdf } from '../../components/pdf/pdf';
 import { storage } from '../../firebase.config';
 import { Project } from '../../segments/projects/projects';
 import { FileService } from '../../services/file.service';
@@ -19,10 +19,11 @@ import { FileItem, ProjectsStoreService } from '../../services/projects-store.se
     RouterLink,
     MatIconModule,
     NgxExtendedPdfViewerModule,
-    CoverflowGallery,
+    // CoverflowGallery,
     MatProgressSpinnerModule,
     MatIconModule,
     RouterLink,
+    Pdf,
   ],
   templateUrl: './view-project.html',
   styleUrl: './view-project.scss',
@@ -41,7 +42,7 @@ export class ViewProjectComponent implements OnInit {
   selectedProject = signal<Project | undefined>(undefined);
   selectedProjectFiles = signal<FileItem[]>([]);
   selectedFile = signal<FileItem | undefined>(undefined);
-  pdfLink = signal<string>(');');
+  pdfLink = signal<string>('');
   showLoader = signal<boolean>(false);
 
   folderPath = signal<string>('Awards');
@@ -68,6 +69,10 @@ export class ViewProjectComponent implements OnInit {
     this.selectedProjectFiles.set(
       await this.projectsStore.getProjectFiles(this.selectedProject()!.id),
     );
+
+    const pdfLink = await this.projectsStore.getProjectPdf(this.selectedProject()!.id);
+    this.pdfLink.set(pdfLink);
+
     setTimeout(() => {
       this.showLoader.set(false);
     }, 1000);

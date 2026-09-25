@@ -35,15 +35,18 @@ export class ProjectsStoreService {
     const docRef = collection(db, 'projects');
     const querySnapshot = await getDocs(docRef);
 
-    const projects = this.projects();
+    let projects = this.projects();
     querySnapshot.forEach((doc) => {
       projects.push({
         id: doc.id,
         projectId: doc.data()['id'],
         name: doc.data()['name'],
         image: doc.data()['image'],
+        isActive: doc.data()['isActive'],
       });
     });
+
+    projects = projects.filter((p) => p.isActive);
     projects.sort((a, b) => a.name.localeCompare(b.name));
     this.projects.set(projects);
 
@@ -60,6 +63,7 @@ export class ProjectsStoreService {
         projectId: docSnap.data()['id'],
         name: docSnap.data()['name'],
         image: docSnap.data()['image'],
+        isActive: docSnap.data()['isActive'],
       };
     } else {
       throw new Error('Document not found');
@@ -84,6 +88,19 @@ export class ProjectsStoreService {
           : Promise.resolve(file),
       ),
     );
+  }
+
+  async getProjectPdf(projectId: string): Promise<string> {
+    const docRef = collection(db, 'pdfs');
+    const q = query(docRef, where('projectId', '==', projectId));
+    const querySnapshot = await getDocs(q);
+
+    let pdfLink: string = '';
+    querySnapshot.forEach((doc) => {
+      pdfLink = doc.data()['pdfLink'];
+    });
+
+    return Promise.resolve(pdfLink);
   }
 
   async getPDFUrl(link: string): Promise<string> {

@@ -1,16 +1,29 @@
 <section id="projects" class="py-24 bg-[#0e0c09]">
   <div class="max-w-7xl mx-auto px-6">
-    <div class="relative">
-      <span class="text-5xl heading mb-6 absolute left-[25px] md:left-[45px] top-[40px] md:top-[45px]">
-        Selected Deliverables
-      </span>
-      <span class="recent-projects sub-heading max-w-2xl mb-6 hollow-text"> Projects </span>
+    <div class="flex flex-col md:flex-row justify-between align center mb-6">
+      <div class="relative">
+        <span
+          class="text-5xl heading mb-6 absolute left-[25px] md:left-[45px] top-[40px] md:top-[45px]"
+        >
+          Selected Deliverables
+        </span>
+        <span class="recent-projects sub-heading max-w-2xl mb-6 hollow-text"> Projects </span>
+      </div>
+      <div class="flex items-center">
+        <button
+          class="px-8 py-3 border border-[#c9a84c] text-[#c9a84c] hover:bg-[#c9a84c] hover:text-black transition-colors cursor-pointer rounded-md h-fit"
+          (click)="openAllProjects()"
+        >
+          View All Projects
+        </button>
+      </div>
     </div>
 
-
-    <p class="md:text-md text-[#666e63] lg:text-right mb-6 italic">
-      A curated selection of design projects from 2024 - 2026.
-    </p>
+    <div class="flex flex-col md:flex-row justify-end align center mb-6">
+      <p class="md:text-md text-[#666e63] italic self-center">
+        A curated selection of design projects from 2024 - 2026.
+      </p>
+    </div>
     @if (projectsResource.isLoading()) {
       <div class="flex" style="width: 100%">
         @for (item of [].constructor(4); track $index) {
@@ -27,7 +40,7 @@
         <p>Unable to load files for awards, please close the popup and try again..</p>
       </div>
     } @else if (projectsResource.value(); as projects) {
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-2 rounded-3xl">
+      <div class="flex flex-wrap justify-center gap-2 rounded-3xl">
         <ng-container
           [ngTemplateOutlet]="projectTemplate"
           [ngTemplateOutletContext]="{ projects: projects }"
@@ -41,7 +54,7 @@
   @for (project of projects; track project.id) {
     <div
       style="background-size: cover; background-position: center"
-      class="group relative bg-[#0e0c09] aspect-square overflow-hidden cursor-pointer rounded-3xl"
+      class="w-full md:w-[calc((100%-1rem)/3)] group relative bg-[#0e0c09] aspect-square overflow-hidden cursor-pointer rounded-3xl"
       [style.background-image]="
         (selectedProject?.id == project.id
           ? 'linear-gradient(0deg,rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.5) 100%)'
@@ -55,6 +68,14 @@
       (mouseleave)="selectedProject = undefined"
       [routerLink]="['/view-project', project.id]"
     >
+      @if ($index === projects.length - 1) {
+        <span
+          class="absolute top-5 left-5 text-[#e6bf56] border border-color-[#e6bf56] rounded-md p-2 flex justify-center align-center"
+        >
+          <mat-icon> emoji_events </mat-icon>
+          Award Winning
+        </span>
+      }
       @if (selectedProject?.id == project.id) {
         <span class="absolute top-5 right-5 text-[#e6bf56]">
           <mat-icon> arrow_outward </mat-icon>
@@ -70,4 +91,33 @@
       </span>
     </div>
   }
+</ng-template>
+
+<ng-template #allProjectsPopup>
+  <div class="flex justify-between items-center" style="padding: 15px 24px 0 24px">
+    <h2 mat-dialog-title>Comprehensive</h2>
+    <button
+      matIconButton
+      [mat-dialog-close]
+      cdkFocusInitial
+      aria-label="Close popup"
+      style="padding-top: 6px"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <mat-dialog-content>
+    <!-- folder-gallery.component.html -->
+    @if (isLoading()) {
+      <div class="loading-spinner flex flex-col items-center justify-center">
+        <mat-spinner class="mb-8"></mat-spinner>
+        <p>Loading file...</p>
+      </div>
+    } @else {
+      <div class="image-grid">
+        <app-pdf [link]="allPdfLink()"></app-pdf>
+      </div>
+    }
+  </mat-dialog-content>
 </ng-template>
