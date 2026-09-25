@@ -1,16 +1,33 @@
 <section id="contact" class="py-24 max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-16">
   <div>
-    <h2 class="text-5xl font-['Great_Vibes'] text-[#c9a84c] mb-8">Let's Connect</h2>
+    <div class="relative">
+      <span class="text-5xl heading mb-6 absolute left-[65px] top-[38px]"> Let's Connect </span>
+      <span class="contact-me sub-heading max-w-2xl mb-6 hollow-text"> Contact </span>
+    </div>
+
     <p class="mb-8 text-[#e6dfd1]/70">
       Open for new opportunities and collaborations. Reach out to start a conversation.
     </p>
     <div class="space-y-4">
+      <!-- Phone -->
+      <p>
+        Phone:
+        <a href="tel:+27712825020" class="text-[#c9a84c] hover:underline"> (+27) 71 282 5020 </a>
+      </p>
+
+      <!-- Email -->
       <p>
         Email:
         <a href="mailto:admin@tselatrails.com" class="text-[#c9a84c] hover:underline">
           admin@tselatrails.com
         </a>
+        /
+        <a href="mailto:karlastrydom03@gmail.com" class="text-[#c9a84c] hover:underline">
+          karlastrydom03@gmail.com
+        </a>
       </p>
+
+      <!-- Instagram -->
       <p>
         Instagram:
         <a
@@ -20,10 +37,32 @@
           >@tsela_design_co</a
         >
       </p>
+
+      <!-- Pinterest -->
+      <p>
+        Pinterest:
+        <a
+          href="https://za.pinterest.com/tsela_design_co/"
+          target="_blank"
+          class="text-[#c9a84c] hover:underline"
+          >@tsela_design_co</a
+        >
+      </p>
+
+      <!-- Linkedin -->
+      <p>
+        Linkedin:
+        <a
+          href="https://www.linkedin.com/in/karla-strydom-114375298/"
+          target="_blank"
+          class="text-[#c9a84c] hover:underline"
+          >Karla Strydom</a
+        >
+      </p>
     </div>
   </div>
 
-  <div class="bg-[#1a1814] p-8 rounded-sm mb-20">
+  <div class="bg-[#1a1814] p-8 rounded-[12px] mb-20">
     @if (formSubmitted()) {
       <div class="h-64 flex flex-col justify-center items-center text-center">
         <h3 class="text-2xl text-[#c9a84c] mb-4">Message Sent!</h3>

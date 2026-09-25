@@ -1,7 +1,0 @@
-@use '@angular/material' as mat;
-
-.file {
-    @include mat.fab-overrides((container-color: orange,
-            container-elevation-shadow: none,
-        ));
-}

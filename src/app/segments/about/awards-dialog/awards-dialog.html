@@ -1,0 +1,31 @@
+<div class="flex justify-between items-center" style="padding: 15px 24px 0 24px">
+  <h2 mat-dialog-title>Industry Awards</h2>
+  <button
+    matIconButton
+    [mat-dialog-close]
+    cdkFocusInitial
+    aria-label="Close popup"
+    style="padding-top: 6px"
+  >
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+<mat-dialog-content>
+  <!-- folder-gallery.component.html -->
+  @if (galleryResource.isLoading()) {
+    <div class="loading-spinner flex flex-col items-center justify-center">
+      <mat-spinner class="mb-8"></mat-spinner>
+      <p>Loading award files...</p>
+    </div>
+  } @else if (galleryResource.error()) {
+    <div class="error-message flex items-center justify-center">
+      <p>Unable to load files for awards, please close the popup and try again..</p>
+    </div>
+  } @else if (galleryResource.value(); as images) {
+    <div class="image-grid">
+      <app-gallery [files]="images"></app-gallery>
+    </div>
+  }
+</mat-dialog-content>
+<mat-dialog-actions></mat-dialog-actions>

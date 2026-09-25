@@ -3,34 +3,81 @@
 // components according to the Material 3 design spec.
 // Learn more about theming and how to use it for your application's
 // custom components at https://material.angular.dev/guide/theming
-@use 'tailwindcss';
 @use '@angular/material' as mat;
+
+@font-face {
+  font-family: 'Olicana';
+  src: url('/Olicana/Olicana-Smooth.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Houschka_Bold';
+  src: url('/Houschka/fonnts.com-Houschka_Pro_Bold.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'Houschka_Light';
+  src: url('/Houschka/fonnts.com-Houschka_Pro_Medium.otf') format('opentype');
+}
+
+
+$helvetica-font-stack: 'Houschka_Light';
 
 html {
   height: 100%;
+
   @include mat.theme((color: (primary: mat.$azure-palette,
         tertiary: mat.$blue-palette,
       ),
-      typography: Roboto,
+      typography: (font-family: $helvetica-font-stack ),
       density: 0,
     ));
 }
 
 body {
-  // Default the application to a light color theme. This can be changed to
-  // `dark` to enable the dark color theme, or to `light dark` to defer to the
-  // user's system settings.
+  height: 100%;
+  margin: 0;
   color-scheme: light;
-
-  // Set a default background, font and text colors for the application using
-  // Angular Material's system-level CSS variables. Learn more about these
-  // variables at https://material.angular.dev/guide/system-variables
   background-color: var(--mat-sys-surface);
   color: var(--mat-sys-on-surface);
-  font: var(--mat-sys-body-medium);
-
-  // Reset the user agent margin.
-  margin: 0;
-  height: 100%;
+  font-family: 'Houschka_Light';
 }
-/* You can add global styles to this file, and also import other style files */
+
+$primary-font: 'Olicana';
+$secondary-font: 'Houschka_Bold';
+$tertiary-font: 'Houschka_Light';
+$color-white: white;
+$color-yellow: #c9a84c;
+$color-body: color-mix(in oklab, #e6dfd1 70%, transparent);
+
+:root {
+  @include mat.dialog-overrides((container-color: rgb(20, 20, 18), subhead-color: $color-yellow, supporting-text-color: $color-body, subhead-font: "#{$primary-font}", subhead-size: 3rem, subhead-line-height: 1));
+  --swiper-preloader-color: #e9b832;
+}
+
+.heading {
+  font-family: #{$primary-font};
+  // color: $color-white;
+}
+
+.sub-heading {
+  font-family: 'Houschka_Bold';
+  color: $color-yellow;
+  text-transform: uppercase;
+}
+
+.body {
+  font-family: 'Houschka_Light';
+  color: $color-body;
+}
+
+.hollow-text {
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 0.5px #c9a84c;
+}
+.hollow-text-white {
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 0.5px #fff;
+}

@@ -1,0 +1,24 @@
+@use '@angular/material' as mat;
+
+.file {
+    @include mat.fab-overrides((container-color: orange,
+            container-elevation-shadow: none,
+        ));
+}
+
+.loading-spinner {
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    align-items: center;
+
+    @include mat.progress-spinner-overrides((active-indicator-color: #c9a84c,
+        ));
+}
+
+@media screen and (orientation: landscape) and (max-width: 1000px) {
+    .view-project-section {
+        overflow: auto !important;
+        min-height: 570px;
+    }
+}
