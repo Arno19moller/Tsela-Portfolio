@@ -64,7 +64,7 @@ export class ProjectsComponent {
       minWidth: '320px',
       height: '80%',
     });
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+    await new Promise((resolve) => setTimeout(resolve, 3000));
     this.isLoading.set(false);
   }
 }
