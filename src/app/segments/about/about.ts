@@ -1,3 +1,4 @@
+import { NgTemplateOutlet } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -9,7 +10,7 @@ import { AwardsDialog } from './awards-dialog/awards-dialog';
 
 @Component({
   selector: 'app-about',
-  imports: [RouterModule, RouterLink, MatTooltipModule, NgxSkeletonLoaderModule],
+  imports: [RouterModule, RouterLink, MatTooltipModule, NgxSkeletonLoaderModule, NgTemplateOutlet],
   templateUrl: './about.html',
   styleUrl: './about.scss',
 })
